@@ -1,4 +1,4 @@
-namespace StoreManager.Model;
+namespace StoreManager.Models;
 
 public class Sale
 {

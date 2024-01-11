@@ -1,5 +1,5 @@
 using Microsoft.EntityFrameworkCore;
-using StoreManager.Model;
+using StoreManager.Models;
 
 namespace StoreManager.Context;
 
