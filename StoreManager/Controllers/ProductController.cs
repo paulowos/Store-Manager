@@ -16,7 +16,7 @@ public class ProductController : ControllerBase
     }
 
     [HttpGet]
-    public ActionResult<IEnumerable<Product>> Get()
+    public ActionResult<IEnumerable<Product>> GetAll()
     {
         return Ok(_repository.GetAll());
     }
