@@ -64,7 +64,7 @@ public class SaleRepositoryTest : IClassFixture<DatabaseContext>
         // Assert
         result.Should().BeEquivalentTo(SalesProductsMockData.GetSalesProductsDto(id));
     }
-    
+
     [Fact(DisplayName = "GetAll when Sales do not exist returns empty list")]
     public void GetAllUnsuccessful()
     {
