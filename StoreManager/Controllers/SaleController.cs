@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using StoreManager.Models;
+using StoreManager.Models.Dto;
 using StoreManager.Models.Interfaces;
 
 namespace StoreManager.Controllers;
@@ -16,13 +17,13 @@ public class SaleController : ControllerBase
     }
 
     [HttpGet]
-    public IActionResult GetAll()
+    public ActionResult<IEnumerable<SaleDto>> GetAll()
     {
         return Ok(_saleRepository.GetAll());
     }
 
     [HttpGet("{id:int}")]
-    public IActionResult GetById(int id)
+    public ActionResult<IEnumerable<SaleDto>> GetById(int id)
     {
         var result = _saleRepository.GetById(id);
         return result == null ? NotFound(new ErrorMessage("Sale not found")) : Ok(result);
