@@ -40,12 +40,18 @@ public class ModelsTest
         {
             ProductId = 1,
             SaleId = 1,
-            Quantity = 1
+            Quantity = 1,
+            Product = new Product { Id = 1, Name = "Test" },
+            Sale = new Sale { Id = 1, Date = default }
         };
 
         saleProduct.ProductId.Should().Be(1);
         saleProduct.SaleId.Should().Be(1);
         saleProduct.Quantity.Should().Be(1);
+        saleProduct.Product.Id.Should().Be(1);
+        saleProduct.Product.Name.Should().Be("Test");
+        saleProduct.Sale.Id.Should().Be(1);
+        saleProduct.Sale.Date.Should().BeCloseTo(default, new TimeSpan(0, 0, 1));
     }
 
     [Fact(DisplayName = "ErrorMessage Model")]
