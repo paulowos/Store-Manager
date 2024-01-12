@@ -1,5 +1,6 @@
 using System;
 using StoreManager.Models;
+using StoreManager.Models.Dto;
 
 namespace StoreManager.Test;
 
@@ -60,5 +61,22 @@ public class ModelsTest
         var errorMessage = new ErrorMessage("Test");
 
         errorMessage.Message.Should().Be("Test");
+    }
+
+    [Fact(DisplayName = "SaleDto Model")]
+    public void SaleDtoModel()
+    {
+        var saleDto = new SaleDto
+        {
+            SaleId = 1,
+            Date = DateTime.Now,
+            ProductId = 1,
+            Quantity = 1
+        };
+
+        saleDto.SaleId.Should().Be(1);
+        saleDto.Date.Should().BeCloseTo(DateTime.Now, new TimeSpan(0, 0, 1));
+        saleDto.ProductId.Should().Be(1);
+        saleDto.Quantity.Should().Be(1);
     }
 }
