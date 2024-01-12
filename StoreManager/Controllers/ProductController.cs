@@ -22,7 +22,7 @@ public class ProductController : ControllerBase
     }
 
     [HttpGet("{id:int}")]
-    public ActionResult<Product> Get(int id)
+    public ActionResult<Product> GetById(int id)
     {
         var product = _repository.GetById(id);
         if (product == null)
