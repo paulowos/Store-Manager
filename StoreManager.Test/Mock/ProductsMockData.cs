@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using StoreManager.Models;
+using StoreManager.Models.Dto;
 
 namespace StoreManager.Test.Mock;
 
@@ -20,6 +21,14 @@ public static class ProductsMockData
         {
             GetProduct(1),
             GetProduct(2)
+        };
+    }
+
+    public static ProductDto GetProductDto(int id)
+    {
+        return new ProductDto
+        {
+            Name = $"Product {id}"
         };
     }
 }

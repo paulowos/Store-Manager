@@ -1,5 +1,3 @@
-using Microsoft.EntityFrameworkCore;
-using StoreManager.Context;
 using StoreManager.Repositories;
 using StoreManager.Test.Context;
 using StoreManager.Test.Mock;
@@ -36,10 +34,7 @@ public class ProductRepositoryTest : IClassFixture<DatabaseContext>
     public void GetByIdUnsuccessful()
     {
         // Arrange
-        var options = new DbContextOptionsBuilder<StoreManagerContext>()
-            .UseInMemoryDatabase(nameof(ProductRepositoryTest) + nameof(GetByIdUnsuccessful))
-            .Options;
-        var context = new StoreManagerContext(options);
+        var context = _databaseContext.GetContext(nameof(ProductRepositoryTest) + nameof(GetByIdUnsuccessful));
         var repository = new ProductRepository(context);
 
         // Act
@@ -53,10 +48,7 @@ public class ProductRepositoryTest : IClassFixture<DatabaseContext>
     public void GetAllSuccessful()
     {
         // Arrange
-        var options = new DbContextOptionsBuilder<StoreManagerContext>()
-            .UseInMemoryDatabase(nameof(ProductRepositoryTest) + nameof(GetAllSuccessful))
-            .Options;
-        var context = new StoreManagerContext(options);
+        var context = _databaseContext.GetContext(nameof(ProductRepositoryTest) + nameof(GetAllSuccessful));
         context.Products.Add(ProductsMockData.GetProduct(1));
         context.Products.Add(ProductsMockData.GetProduct(2));
         context.SaveChanges();
@@ -73,10 +65,7 @@ public class ProductRepositoryTest : IClassFixture<DatabaseContext>
     public void GetAllEmpty()
     {
         // Arrange
-        var options = new DbContextOptionsBuilder<StoreManagerContext>()
-            .UseInMemoryDatabase(nameof(ProductRepositoryTest) + nameof(GetAllEmpty))
-            .Options;
-        var context = new StoreManagerContext(options);
+        var context = _databaseContext.GetContext(nameof(ProductRepositoryTest) + nameof(GetAllEmpty));
         var repository = new ProductRepository(context);
 
         // Act
@@ -84,5 +73,19 @@ public class ProductRepositoryTest : IClassFixture<DatabaseContext>
 
         // Assert
         result.Should().BeEmpty();
+    }
+
+    [Fact(DisplayName = "Create Product successful returns Product")]
+    public void CreateSuccessful()
+    {
+        // Arrange
+        var context = _databaseContext.GetContext(nameof(ProductRepositoryTest) + nameof(CreateSuccessful));
+        var repository = new ProductRepository(context);
+
+        // Act
+        var result = repository.Add(ProductsMockData.GetProductDto(1));
+
+        // Assert
+        result.Should().BeEquivalentTo(ProductsMockData.GetProduct(1));
     }
 }
