@@ -50,10 +50,10 @@ public class ModelsTest
         errorMessage.Message.Should().Be("Test");
     }
 
-    [Fact(DisplayName = "SaleDto Model")]
+    [Fact(DisplayName = "SaleProductDto Model")]
     public void SaleDtoModel()
     {
-        var saleDto = new SaleDto
+        var saleDto = new SaleProductDto
         {
             SaleId = 1,
             Date = DateTime.Now,

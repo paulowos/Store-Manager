@@ -37,7 +37,7 @@ public class SaleControllerTest
         // Arrange
         var mockRepo = new Mock<ISaleRepository>();
         mockRepo.Setup(repo => repo.GetAll())
-            .Returns(new List<SaleDto>());
+            .Returns(new List<SaleProductDto>());
         var controller = new SaleController(mockRepo.Object);
 
         // Act
@@ -46,7 +46,7 @@ public class SaleControllerTest
 
         // Assert
         response.StatusCode.Should().Be((int)HttpStatusCode.OK);
-        response.Value.Should().BeEquivalentTo(Array.Empty<SaleDto>());
+        response.Value.Should().BeEquivalentTo(Array.Empty<SaleProductDto>());
     }
 
     [Theory(DisplayName = "GetById when Sale exists returns Sale")]
@@ -75,7 +75,7 @@ public class SaleControllerTest
         // Arrange
         var mockRepo = new Mock<ISaleRepository>();
         mockRepo.Setup(repo => repo.GetById(It.IsAny<int>()))
-            .Returns((IEnumerable<SaleDto>?)null);
+            .Returns((IEnumerable<SaleProductDto>?)null);
         var controller = new SaleController(mockRepo.Object);
 
         // Act

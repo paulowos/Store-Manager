@@ -17,13 +17,13 @@ public class SaleController : ControllerBase
     }
 
     [HttpGet]
-    public ActionResult<IEnumerable<SaleDto>> GetAll()
+    public ActionResult<IEnumerable<SaleProductDto>> GetAll()
     {
         return Ok(_saleRepository.GetAll());
     }
 
     [HttpGet("{id:int}")]
-    public ActionResult<IEnumerable<SaleDto>> GetById(int id)
+    public ActionResult<IEnumerable<SaleProductDto>> GetById(int id)
     {
         var result = _saleRepository.GetById(id);
         return result == null ? NotFound(new ErrorMessage("Sale not found")) : Ok(result);

@@ -4,6 +4,7 @@ namespace StoreManager.Models.Interfaces;
 
 public interface ISaleRepository
 {
-    public IEnumerable<SaleDto>? GetById(int id);
-    public IEnumerable<SaleDto> GetAll();
+    public IEnumerable<SaleProductDto>? GetById(int id);
+    public IEnumerable<SaleProductDto> GetAll();
+    public SaleOutputDto Add(IEnumerable<SaleInputDto> products);
 }

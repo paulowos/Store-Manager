@@ -16,9 +16,9 @@ public static class SalesProductsMockData
         };
     }
 
-    public static IEnumerable<SaleDto> GetSalesProductsDto(int id)
+    public static IEnumerable<SaleProductDto> GetSalesProductsDto(int id)
     {
-        return new List<SaleDto>
+        return new List<SaleProductDto>
         {
             new()
             {
