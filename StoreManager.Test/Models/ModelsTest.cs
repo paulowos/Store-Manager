@@ -2,24 +2,11 @@ using System;
 using StoreManager.Models;
 using StoreManager.Models.Dto;
 
-namespace StoreManager.Test;
+namespace StoreManager.Test.Models;
 
 [Trait("Category", "Models")]
 public class ModelsTest
 {
-    [Fact(DisplayName = "Product Model")]
-    public void ProductModel()
-    {
-        var product = new Product
-        {
-            Id = 1,
-            Name = "Test"
-        };
-
-        product.Id.Should().Be(1);
-        product.Name.Should().Be("Test");
-    }
-
     [Fact(DisplayName = "Sale Model")]
     public void SaleModel()
     {

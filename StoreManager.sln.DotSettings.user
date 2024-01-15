@@ -1,10 +1,9 @@
 ﻿<wpf:ResourceDictionary xml:space="preserve" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:ss="urn:shemas-jetbrains-com:settings-storage-xaml" xmlns:wpf="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
 	<s:String x:Key="/Default/Environment/Highlighting/HighlightingSourceSnapshotLocation/@EntryValue">/home/paulowos/.cache/JetBrains/Rider2023.3/resharper-host/temp/Rider/vAny/CoverageData/_StoreManager.-1900004981/Snapshot/snapshot.utdcvr</s:String>
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=98753bf4_002D609f_002D4b04_002D9e9a_002Dd8170baaece3/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="SaleRepositoryTest" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;
-  &lt;TestAncestor&gt;
-    &lt;TestId&gt;xUnit::C1E304A6-31A3-45BE-9850-FD6C06C7DC84::net6.0::StoreManager.Test.Repositories.SaleRepositoryTest&lt;/TestId&gt;
-  &lt;/TestAncestor&gt;
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=075b6cf9_002D4bc7_002D4a38_002Daa67_002Db261d120f6ca/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="All tests from &amp;lt;StoreManager.Test&amp;gt;" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;
+  &lt;Project Location="/home/paulowos/Dev/dotnet_projects/StoreManager/StoreManager.Test" Presentation="&amp;lt;StoreManager.Test&amp;gt;" /&gt;
 &lt;/SessionState&gt;</s:String>
+	
 	
 	
 	
