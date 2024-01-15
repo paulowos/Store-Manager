@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using StoreManager.Models;
+using StoreManager.Models.Dto;
 using StoreManager.Models.Interfaces;
 
 namespace StoreManager.Controllers;
@@ -28,5 +29,12 @@ public class ProductController : ControllerBase
         if (product == null)
             return NotFound(new ErrorMessage("Product not found"));
         return Ok(product);
+    }
+
+    [HttpPost]
+    public ActionResult<Product> Add(ProductDto productDto)
+    {
+        var product = _repository.Add(productDto);
+        return CreatedAtAction(nameof(GetById), new { id = product.Id }, product);
     }
 }

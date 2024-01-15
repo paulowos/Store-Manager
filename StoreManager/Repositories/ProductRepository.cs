@@ -1,5 +1,6 @@
 using StoreManager.Context;
 using StoreManager.Models;
+using StoreManager.Models.Dto;
 using StoreManager.Models.Interfaces;
 
 namespace StoreManager.Repositories;
@@ -23,5 +24,16 @@ public class ProductRepository : IProductRepository
     {
         var products = _context.Products.OrderBy(p => p.Id).ToList();
         return products;
+    }
+
+    public Product Add(ProductDto productDto)
+    {
+        var product = new Product
+        {
+            Name = productDto.Name
+        };
+        _context.Products.Add(product);
+        _context.SaveChanges();
+        return product;
     }
 }
