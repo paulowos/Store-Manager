@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Moq;
 using StoreManager.Controllers;
 using StoreManager.Models;
+using StoreManager.Models.Dto;
 using StoreManager.Models.Interfaces;
 using StoreManager.Test.Mock;
 
@@ -84,5 +85,23 @@ public class ProductControllerTest
         // Assert
         response.Should().BeOfType<NotFoundObjectResult>();
         response.Value.Should().BeEquivalentTo(new ErrorMessage("Product not found"));
+    }
+
+    [Fact(DisplayName = "Create when Product is valid returns CreatedAtRoute")]
+    public void CreateProductSuccessful()
+    {
+        // Arrange
+        var mockRepo = new Mock<IProductRepository>();
+        mockRepo.Setup(repo => repo.Add(It.IsAny<ProductDto>()))
+            .Returns(ProductsMockData.GetProduct(1));
+        var controller = new ProductController(mockRepo.Object);
+
+        // Act
+        var result = controller.Add(ProductsMockData.GetProductDto(1));
+        var response = result.Result.As<CreatedAtActionResult>();
+
+        // Assert
+        response.StatusCode.Should().Be((int)HttpStatusCode.Created);
+        response.Value.Should().BeEquivalentTo(ProductsMockData.GetProduct(1));
     }
 }
