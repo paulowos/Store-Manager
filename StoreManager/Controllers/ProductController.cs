@@ -65,4 +65,10 @@ public class ProductController : ControllerBase
             return NotFound(new ErrorMessage(e.Message));
         }
     }
+
+    [HttpGet("search")]
+    public ActionResult<IEnumerable<Product>> Search([FromQuery] string? q = "")
+    {
+        return Ok(_repository.Search(q));
+    }
 }

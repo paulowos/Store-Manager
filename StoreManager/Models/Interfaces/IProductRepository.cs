@@ -9,5 +9,5 @@ public interface IProductRepository
     public Product Add(ProductDto productDto);
     public Product Update(int id, ProductDto productDto);
     public void Delete(int id);
-    public IEnumerable<Product> Search(string name);
+    public IEnumerable<Product> Search(string? name);
 }
