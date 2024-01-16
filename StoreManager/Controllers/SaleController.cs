@@ -28,4 +28,11 @@ public class SaleController : ControllerBase
         var result = _saleRepository.GetById(id);
         return result == null ? NotFound(new ErrorMessage("Sale not found")) : Ok(result);
     }
+
+    [HttpPost]
+    public ActionResult<SaleOutputDto> Add(IEnumerable<SaleInputDto> products)
+    {
+        var result = _saleRepository.Add(products);
+        return CreatedAtAction(nameof(GetById), new { id = result.Id }, result);
+    }
 }
