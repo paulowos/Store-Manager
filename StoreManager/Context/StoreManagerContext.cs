@@ -1,10 +1,14 @@
 using Microsoft.EntityFrameworkCore;
-using StoreManager.Model;
+using StoreManager.Models;
 
 namespace StoreManager.Context;
 
 public class StoreManagerContext : DbContext
 {
+    public StoreManagerContext(DbContextOptions<StoreManagerContext> options) : base(options)
+    {
+    }
+
     public DbSet<Product> Products { get; set; } = null!;
     public DbSet<Sale> Sales { get; set; } = null!;
     public DbSet<SaleProduct> SalesProducts { get; set; } = null!;

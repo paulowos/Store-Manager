@@ -1,4 +1,6 @@
 using StoreManager.Context;
+using StoreManager.Models.Interfaces;
+using StoreManager.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,7 +11,9 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<StoreManagerContext>();
-builder.Services.AddSingleton<StoreManagerContext, StoreManagerContext>();
+builder.Services.AddScoped<StoreManagerContext, StoreManagerContext>();
+builder.Services.AddScoped<IProductRepository, ProductRepository>();
+builder.Services.AddScoped<ISaleRepository, SaleRepository>();
 
 var app = builder.Build();
 
