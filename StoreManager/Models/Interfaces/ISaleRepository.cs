@@ -7,4 +7,5 @@ public interface ISaleRepository
     public IEnumerable<SaleProductDto>? GetById(int id);
     public IEnumerable<SaleProductDto> GetAll();
     public SaleOutputDto Add(IEnumerable<SaleInputDto> products);
+    public void Delete(int id);
 }

@@ -84,4 +84,13 @@ public class SaleRepository : ISaleRepository
             ItemsSold = saleInputDtos
         };
     }
+
+    public void Delete(int id)
+    {
+        var sale = _context.Sales.Find(id);
+        if (sale == null) throw new ArgumentException($"Sale with id {id} does not exist");
+
+        _context.Sales.Remove(sale);
+        _context.SaveChanges();
+    }
 }
