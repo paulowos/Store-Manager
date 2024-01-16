@@ -1,3 +1,4 @@
+using System;
 using StoreManager.Repositories;
 using StoreManager.Test.Context;
 using StoreManager.Test.Mock;
@@ -87,5 +88,37 @@ public class ProductRepositoryTest : IClassFixture<DatabaseContext>
 
         // Assert
         result.Should().BeEquivalentTo(ProductsMockData.GetProduct(1));
+    }
+
+    [Fact(DisplayName = "Update Product successful returns Product")]
+    public void UpdateSuccessful()
+    {
+        // Arrange
+        const int id = 1;
+        var context = _databaseContext.GetContext(nameof(ProductRepositoryTest) + nameof(UpdateSuccessful));
+        context.Products.Add(ProductsMockData.GetProduct(id));
+        context.SaveChanges();
+        var repository = new ProductRepository(context);
+
+        // Act
+        var result = repository.Update(id, ProductsMockData.GetProductDto(id));
+
+        // Assert
+        result.Should().BeEquivalentTo(ProductsMockData.GetProduct(id));
+    }
+
+    [Fact(DisplayName = "Update Product when Product does not exist throws Exception")]
+    public void UpdateUnsuccessful()
+    {
+        // Arrange
+        const int id = 1;
+        var context = _databaseContext.GetContext(nameof(ProductRepositoryTest) + nameof(UpdateUnsuccessful));
+        var repository = new ProductRepository(context);
+
+        // Act
+        Action act = () => repository.Update(id, ProductsMockData.GetProductDto(id));
+
+        // Assert
+        act.Should().Throw<Exception>().WithMessage("Product not found");
     }
 }
