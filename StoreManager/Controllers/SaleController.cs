@@ -42,4 +42,18 @@ public class SaleController : ControllerBase
             return BadRequest(new ErrorMessage(e.Message));
         }
     }
+
+    [HttpDelete("{id:int}")]
+    public ActionResult Delete(int id)
+    {
+        try
+        {
+            _saleRepository.Delete(id);
+            return NoContent();
+        }
+        catch (Exception e)
+        {
+            return BadRequest(new ErrorMessage(e.Message));
+        }
+    }
 }
