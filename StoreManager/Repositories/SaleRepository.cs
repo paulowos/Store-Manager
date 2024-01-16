@@ -56,23 +56,32 @@ public class SaleRepository : ISaleRepository
 
         var saleId = sale.Id;
 
-        var productAndQuantityDtos = products.ToList();
-        var saleProducts = productAndQuantityDtos.Select(p => new SaleProduct
+        var saleInputDtos = products as SaleInputDto[] ?? products.ToArray();
+        foreach (var saleInputDto in saleInputDtos)
         {
-            SaleId = saleId,
-            ProductId = p.ProductId,
-            Quantity = p.Quantity
-        });
+            var product = _context.Products.Find(saleInputDto.ProductId);
+            if (product == null)
+            {
+                _context.Sales.Remove(sale);
+                _context.SaveChanges();
+                throw new ArgumentException($"Product with id {saleInputDto.ProductId} does not exist");
+            }
 
-        var enumerable = saleProducts.ToList();
-        _context.SalesProducts.AddRange(enumerable);
+            _context.SalesProducts.Add(new SaleProduct
+            {
+                SaleId = saleId,
+                ProductId = saleInputDto.ProductId,
+                Quantity = saleInputDto.Quantity
+            });
+        }
+
         _context.SaveChanges();
 
         return new SaleOutputDto
         {
             Id = saleId,
             Date = sale.Date,
-            ItemsSold = productAndQuantityDtos
+            ItemsSold = saleInputDtos
         };
     }
 }

@@ -32,7 +32,14 @@ public class SaleController : ControllerBase
     [HttpPost]
     public ActionResult<SaleOutputDto> Add(IEnumerable<SaleInputDto> products)
     {
-        var result = _saleRepository.Add(products);
-        return CreatedAtAction(nameof(GetById), new { id = result.Id }, result);
+        try
+        {
+            var result = _saleRepository.Add(products);
+            return CreatedAtAction(nameof(GetById), new { id = result.Id }, result);
+        }
+        catch (Exception e)
+        {
+            return BadRequest(new ErrorMessage(e.Message));
+        }
     }
 }
