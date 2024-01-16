@@ -45,4 +45,12 @@ public class ProductRepository : IProductRepository
         _context.SaveChanges();
         return product;
     }
+
+    public void Delete(int id)
+    {
+        var product = _context.Products.Find(id);
+        if (product == null) throw new ArgumentException("Product not found");
+        _context.Products.Remove(product);
+        _context.SaveChanges();
+    }
 }
