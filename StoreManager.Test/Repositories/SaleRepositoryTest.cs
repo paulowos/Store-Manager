@@ -1,3 +1,6 @@
+using System;
+using System.Collections.Generic;
+using StoreManager.Models.Dto;
 using StoreManager.Repositories;
 using StoreManager.Test.Context;
 using StoreManager.Test.Mock;
@@ -77,5 +80,33 @@ public class SaleRepositoryTest : IClassFixture<DatabaseContext>
 
         // Assert
         result.Should().BeEmpty();
+    }
+
+    [Fact(DisplayName = "Add when SaleInputDtos are valid returns SaleOutputDto")]
+    public void AddSuccessful()
+    {
+        // Arrange
+        const int id = 1;
+        var context = _databaseContext.GetContext(nameof(SaleRepositoryTest) + nameof(AddSuccessful));
+        context.Products.Add(ProductsMockData.GetProduct(id));
+        context.SaveChanges();
+        var repository = new SaleRepository(context);
+        var saleInputDtos = new List<SaleInputDto>
+        {
+            new()
+            {
+                ProductId = id,
+                Quantity = 1
+            }
+        };
+
+        // Act
+        var result = repository.Add(saleInputDtos);
+
+        // Assert
+        var expected = SalesMockData.GetSaleOutputDto(id, saleInputDtos);
+        result.Id.Should().Be(expected.Id);
+        result.Date.Should().BeCloseTo(expected.Date, TimeSpan.FromSeconds(1));
+        result.ItemsSold.Should().BeEquivalentTo(expected.ItemsSold);
     }
 }
