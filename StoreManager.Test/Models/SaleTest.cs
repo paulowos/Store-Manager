@@ -1,6 +1,7 @@
 ﻿using System;
 using StoreManager.Models;
 using StoreManager.Models.Dto;
+using StoreManager.Test.Helpers;
 
 namespace StoreManager.Test.Models;
 
@@ -32,6 +33,41 @@ public class SaleTest
         saleInputDto.ProductId.Should().Be(1);
         saleInputDto.Quantity.Should().Be(10);
     }
+
+    [Fact(DisplayName = "SaleInputDto Model - Empty ProductId")]
+    public void SaleInputDtoEmptyProductId()
+    {
+        var saleInputDto = new SaleInputDto
+        {
+            ProductId = 0,
+            Quantity = 10
+        };
+
+        saleInputDto.ProductId.Should().Be(0);
+        saleInputDto.Quantity.Should().Be(10);
+        var result = ValidateModel.Validate(saleInputDto);
+        result.IsValid.Should().BeFalse();
+        result.ValidationResults.Should()
+            .Contain(x => x.ErrorMessage == "Product Id is required");
+    }
+
+    [Fact(DisplayName = "SaleInputDto Model - Empty Quantity")]
+    public void SaleInputDtoEmptyQuantity()
+    {
+        var saleInputDto = new SaleInputDto
+        {
+            ProductId = 1,
+            Quantity = 0
+        };
+
+        saleInputDto.ProductId.Should().Be(1);
+        saleInputDto.Quantity.Should().Be(0);
+        var result = ValidateModel.Validate(saleInputDto);
+        result.IsValid.Should().BeFalse();
+        result.ValidationResults.Should()
+            .Contain(x => x.ErrorMessage == "Quantity must be greater than 0");
+    }
+
 
     [Fact(DisplayName = "SaleOutputDto Model")]
     public void SaleOutputDtoModel()

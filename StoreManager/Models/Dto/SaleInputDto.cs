@@ -5,6 +5,7 @@ namespace StoreManager.Models.Dto;
 public class SaleInputDto
 {
     [Required(ErrorMessage = "Product Id is required")]
+    [Range(1, int.MaxValue, ErrorMessage = "Product Id is required")]
     public int ProductId { get; init; }
 
     [Required(ErrorMessage = "Quantity is required")]
