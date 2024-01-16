@@ -184,4 +184,40 @@ public class ProductControllerTest
         response.Should().BeOfType<NotFoundObjectResult>();
         response.Value.Should().BeEquivalentTo(new ErrorMessage("Product not found"));
     }
+
+    [Fact(DisplayName = "Search when successful returns Products")]
+    public void SearchProductSuccessful()
+    {
+        // Arrange
+        var mockRepo = new Mock<IProductRepository>();
+        mockRepo.Setup(repo => repo.Search(It.IsAny<string>()))
+            .Returns(ProductsMockData.GetProducts());
+        var controller = new ProductController(mockRepo.Object);
+
+        // Act
+        var result = controller.Search("Product");
+        var response = result.Result.As<OkObjectResult>();
+
+        // Assert
+        response.StatusCode.Should().Be((int)HttpStatusCode.OK);
+        response.Value.Should().BeEquivalentTo(ProductsMockData.GetProducts());
+    }
+
+    [Fact(DisplayName = "Search when no Products exist returns empty list")]
+    public void SearchProductEmpty()
+    {
+        // Arrange
+        var mockRepo = new Mock<IProductRepository>();
+        mockRepo.Setup(repo => repo.Search(It.IsAny<string>()))
+            .Returns(new List<Product>());
+        var controller = new ProductController(mockRepo.Object);
+
+        // Act
+        var result = controller.Search("Product");
+        var response = result.Result.As<OkObjectResult>();
+
+        // Assert
+        response.StatusCode.Should().Be((int)HttpStatusCode.OK);
+        response.Value.Should().BeEquivalentTo(Array.Empty<Product>());
+    }
 }
