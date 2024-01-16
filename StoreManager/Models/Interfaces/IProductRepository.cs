@@ -7,4 +7,5 @@ public interface IProductRepository
     public Product? GetById(int id);
     public IEnumerable<Product> GetAll();
     public Product Add(ProductDto productDto);
+    public Product Update(int id, ProductDto productDto);
 }

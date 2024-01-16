@@ -36,4 +36,13 @@ public class ProductRepository : IProductRepository
         _context.SaveChanges();
         return product;
     }
+
+    public Product Update(int id, ProductDto productDto)
+    {
+        var product = _context.Products.Find(id);
+        if (product == null) throw new ArgumentException("Product not found");
+        product.Name = productDto.Name;
+        _context.SaveChanges();
+        return product;
+    }
 }
