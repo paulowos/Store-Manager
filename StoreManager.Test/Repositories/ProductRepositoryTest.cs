@@ -121,7 +121,7 @@ public class ProductRepositoryTest : IClassFixture<DatabaseContext>
         // Assert
         act.Should().Throw<ArgumentException>().WithMessage("Product not found");
     }
-    
+
     [Fact(DisplayName = "Delete Product successful")]
     public void DeleteSuccessful()
     {
@@ -138,7 +138,7 @@ public class ProductRepositoryTest : IClassFixture<DatabaseContext>
         // Assert
         context.Products.Should().BeEmpty();
     }
-    
+
     [Fact(DisplayName = "Delete Product when Product does not exist throws Exception")]
     public void DeleteUnsuccessful()
     {

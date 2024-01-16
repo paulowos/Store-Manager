@@ -145,4 +145,43 @@ public class ProductControllerTest
         response.Should().BeOfType<NotFoundObjectResult>();
         response.Value.Should().BeEquivalentTo(new ErrorMessage("Product not found"));
     }
+
+    [Fact(DisplayName = "Delete when successful returns NoContent")]
+    public void DeleteProductSuccessful()
+    {
+        // Arrange
+        const int id = 1;
+        var mockRepo = new Mock<IProductRepository>();
+        mockRepo
+            .Setup(repo => repo
+                .Delete(It.IsAny<int>()));
+        var controller = new ProductController(mockRepo.Object);
+
+        // Act
+        var result = controller.Delete(id);
+        var response = result.As<NoContentResult>();
+
+        // Assert
+        response.StatusCode.Should().Be((int)HttpStatusCode.NoContent);
+    }
+
+    [Fact(DisplayName = "Delete when Product does not exist returns NotFound")]
+    public void DeleteProductUnsuccessful()
+    {
+        // Arrange
+        var mockRepo = new Mock<IProductRepository>();
+        mockRepo
+            .Setup(repo => repo
+                .Delete(It.IsAny<int>()))
+            .Throws(() => new ArgumentException("Product not found"));
+        var controller = new ProductController(mockRepo.Object);
+
+        // Act
+        var result = controller.Delete(1);
+        var response = result.As<NotFoundObjectResult>();
+
+        // Assert
+        response.Should().BeOfType<NotFoundObjectResult>();
+        response.Value.Should().BeEquivalentTo(new ErrorMessage("Product not found"));
+    }
 }
