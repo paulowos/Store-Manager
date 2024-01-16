@@ -37,4 +37,18 @@ public class ProductController : ControllerBase
         var product = _repository.Add(productDto);
         return CreatedAtAction(nameof(GetById), new { id = product.Id }, product);
     }
+
+    [HttpPut("{id:int}")]
+    public ActionResult<Product> Update([FromRoute] int id, [FromBody] ProductDto productDto)
+    {
+        try
+        {
+            var product = _repository.Update(id, productDto);
+            return Ok(product);
+        }
+        catch (Exception e)
+        {
+            return NotFound(new ErrorMessage(e.Message));
+        }
+    }
 }
