@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
@@ -11,6 +12,7 @@ using StoreManager.Test.Mock;
 
 namespace StoreManager.Test.Controllers;
 
+[Trait("Category", "Controllers")]
 public class SaleControllerTest
 {
     [Fact(DisplayName = "GetAll returns Sales")]
@@ -85,5 +87,31 @@ public class SaleControllerTest
         // Assert
         response.StatusCode.Should().Be((int)HttpStatusCode.NotFound);
         response.Value.Should().BeEquivalentTo(new ErrorMessage("Sale not found"));
+    }
+
+    [Fact(DisplayName = "Add returns CreatedAtRoute")]
+    public void AddSuccessful()
+    {
+        // Arrange
+        var saleInputDto = SalesMockData.GetSaleInputDto(1, 1);
+        var saleInputDtos = saleInputDto as SaleInputDto[] ?? saleInputDto.ToArray();
+        var saleOutputDto = SalesMockData.GetSaleOutputDto(1, saleInputDtos);
+        var mockRepo = new Mock<ISaleRepository>();
+        mockRepo.Setup(repo => repo.Add(It.IsAny<IEnumerable<SaleInputDto>>()))
+            .Returns(saleOutputDto);
+        var controller = new SaleController(mockRepo.Object);
+
+        // Act
+        var result = controller.Add(SalesMockData.GetSaleInputDto(1, 1));
+        var response = result.Result.As<CreatedAtActionResult>();
+        var value = response.Value.As<SaleOutputDto>();
+
+        // Assert
+        response.StatusCode.Should().Be((int)HttpStatusCode.Created);
+        response.ActionName.Should().Be(nameof(controller.GetById));
+        response.RouteValues.Should().BeEquivalentTo(new Dictionary<string, int> { { "id", 1 } });
+        value.Id.Should().Be(saleOutputDto.Id);
+        value.Date.Should().BeCloseTo(DateTime.Now, TimeSpan.FromSeconds(1));
+        value.ItemsSold.Should().BeEquivalentTo(saleInputDtos);
     }
 }

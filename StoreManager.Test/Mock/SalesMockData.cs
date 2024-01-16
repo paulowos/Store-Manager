@@ -25,4 +25,16 @@ public static class SalesMockData
             ItemsSold = products
         };
     }
+
+    public static IEnumerable<SaleInputDto> GetSaleInputDto(int id, int quantity)
+    {
+        return new List<SaleInputDto>
+        {
+            new()
+            {
+                ProductId = id,
+                Quantity = quantity
+            }
+        };
+    }
 }
