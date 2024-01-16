@@ -114,4 +114,22 @@ public class SaleControllerTest
         value.Date.Should().BeCloseTo(DateTime.Now, TimeSpan.FromSeconds(1));
         value.ItemsSold.Should().BeEquivalentTo(saleInputDtos);
     }
+
+    [Fact(DisplayName = "Add when Products do not exist returns BadRequest")]
+    public void AddProductsNotFound()
+    {
+        // Arrange
+        var mockRepo = new Mock<ISaleRepository>();
+        mockRepo.Setup(repo => repo.Add(It.IsAny<IEnumerable<SaleInputDto>>()))
+            .Throws<ArgumentException>(() => throw new ArgumentException("Product with id 1 does not exist"));
+        var controller = new SaleController(mockRepo.Object);
+
+        // Act
+        var result = controller.Add(SalesMockData.GetSaleInputDto(1, 1));
+        var response = result.Result.As<BadRequestObjectResult>();
+
+        // Assert
+        response.StatusCode.Should().Be((int)HttpStatusCode.BadRequest);
+        response.Value.Should().BeEquivalentTo(new ErrorMessage("Product with id 1 does not exist"));
+    }
 }
