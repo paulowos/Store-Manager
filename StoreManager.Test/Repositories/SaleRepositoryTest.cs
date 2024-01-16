@@ -109,4 +109,27 @@ public class SaleRepositoryTest : IClassFixture<DatabaseContext>
         result.Date.Should().BeCloseTo(expected.Date, TimeSpan.FromSeconds(1));
         result.ItemsSold.Should().BeEquivalentTo(expected.ItemsSold);
     }
+
+    [Fact(DisplayName = "Add when SaleInputDtos are invalid throws ArgumentException")]
+    public void AddUnsuccessful()
+    {
+        // Arrange
+        const int id = 1;
+        var context = _databaseContext.GetContext(nameof(SaleRepositoryTest) + nameof(AddUnsuccessful));
+        var repository = new SaleRepository(context);
+        var saleInputDtos = new List<SaleInputDto>
+        {
+            new()
+            {
+                ProductId = id,
+                Quantity = 10
+            }
+        };
+
+        // Act
+        Action act = () => repository.Add(saleInputDtos);
+
+        // Assert
+        act.Should().Throw<ArgumentException>().WithMessage("Product with id 1 does not exist");
+    }
 }
