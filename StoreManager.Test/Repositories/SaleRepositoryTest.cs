@@ -132,4 +132,38 @@ public class SaleRepositoryTest : IClassFixture<DatabaseContext>
         // Assert
         act.Should().Throw<ArgumentException>().WithMessage("Product with id 1 does not exist");
     }
+
+    [Fact(DisplayName = "Delete when Sale exists deletes Sale")]
+    public void DeleteSuccessful()
+    {
+        // Arrange
+        const int id = 1;
+        var context = _databaseContext.GetContext(nameof(SaleRepositoryTest) + nameof(DeleteSuccessful));
+        context.Sales.Add(SalesMockData.GetSale(id));
+        context.Products.Add(ProductsMockData.GetProduct(id));
+        context.SalesProducts.Add(SalesProductsMockData.GetSaleProduct(id));
+        context.SaveChanges();
+        var repository = new SaleRepository(context);
+
+        // Act
+        repository.Delete(id);
+
+        // Assert
+        context.Sales.Should().BeEmpty();
+        context.SalesProducts.Should().BeEmpty();
+    }
+
+    [Fact(DisplayName = "Delete when Sale does not exist throws ArgumentException")]
+    public void DeleteUnsuccessful()
+    {
+        // Arrange
+        var context = _databaseContext.GetContext(nameof(SaleRepositoryTest) + nameof(DeleteUnsuccessful));
+        var repository = new SaleRepository(context);
+
+        // Act
+        var act = () => repository.Delete(1);
+
+        // Assert
+        act.Should().Throw<ArgumentException>().WithMessage("Sale with id 1 does not exist");
+    }
 }
