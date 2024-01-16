@@ -119,6 +119,6 @@ public class ProductRepositoryTest : IClassFixture<DatabaseContext>
         Action act = () => repository.Update(id, ProductsMockData.GetProductDto(id));
 
         // Assert
-        act.Should().Throw<Exception>().WithMessage("Product not found");
+        act.Should().Throw<ArgumentException>().WithMessage("Product not found");
     }
 }

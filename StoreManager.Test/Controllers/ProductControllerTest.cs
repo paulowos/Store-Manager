@@ -104,4 +104,45 @@ public class ProductControllerTest
         response.StatusCode.Should().Be((int)HttpStatusCode.Created);
         response.Value.Should().BeEquivalentTo(ProductsMockData.GetProduct(1));
     }
+
+    [Fact(DisplayName = "Update when successful returns Ok")]
+    public void UpdateProductSuccessful()
+    {
+        // Arrange
+        const int id = 1;
+        var mockRepo = new Mock<IProductRepository>();
+        mockRepo
+            .Setup(repo => repo
+                .Update(It.IsAny<int>(), It.IsAny<ProductDto>()))
+            .Returns(ProductsMockData.GetProduct(id));
+        var controller = new ProductController(mockRepo.Object);
+
+        // Act
+        var result = controller.Update(id, ProductsMockData.GetProductDto(id));
+        var response = result.Result.As<OkObjectResult>();
+
+        // Assert
+        response.StatusCode.Should().Be((int)HttpStatusCode.OK);
+        response.Value.Should().BeEquivalentTo(ProductsMockData.GetProduct(id));
+    }
+
+    [Fact(DisplayName = "Update when Product does not exist returns NotFound")]
+    public void UpdateProductUnsuccessful()
+    {
+        // Arrange
+        var mockRepo = new Mock<IProductRepository>();
+        mockRepo
+            .Setup(repo => repo
+                .Update(It.IsAny<int>(), It.IsAny<ProductDto>()))
+            .Throws(() => new ArgumentException("Product not found"));
+        var controller = new ProductController(mockRepo.Object);
+
+        // Act
+        var result = controller.Update(1, ProductsMockData.GetProductDto(1));
+        var response = result.Result.As<NotFoundObjectResult>();
+
+        // Assert
+        response.Should().BeOfType<NotFoundObjectResult>();
+        response.Value.Should().BeEquivalentTo(new ErrorMessage("Product not found"));
+    }
 }
