@@ -153,4 +153,35 @@ public class ProductRepositoryTest : IClassFixture<DatabaseContext>
         // Assert
         act.Should().Throw<ArgumentException>().WithMessage("Product not found");
     }
+
+    [Fact(DisplayName = "Search when Products exist returns Products")]
+    public void SearchSuccessful()
+    {
+        // Arrange
+        var context = _databaseContext.GetContext(nameof(ProductRepositoryTest) + nameof(SearchSuccessful));
+        context.Products.Add(ProductsMockData.GetProduct(1));
+        context.Products.Add(ProductsMockData.GetProduct(2));
+        context.SaveChanges();
+        var repository = new ProductRepository(context);
+
+        // Act
+        var result = repository.Search("Product");
+
+        // Assert
+        result.Should().BeEquivalentTo(ProductsMockData.GetProducts());
+    }
+
+    [Fact(DisplayName = "Search when no Products exist returns empty list")]
+    public void SearchEmpty()
+    {
+        // Arrange
+        var context = _databaseContext.GetContext(nameof(ProductRepositoryTest) + nameof(SearchEmpty));
+        var repository = new ProductRepository(context);
+
+        // Act
+        var result = repository.Search("Product");
+
+        // Assert
+        result.Should().BeEmpty();
+    }
 }
