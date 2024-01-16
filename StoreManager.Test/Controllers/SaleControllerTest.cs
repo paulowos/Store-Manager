@@ -132,4 +132,38 @@ public class SaleControllerTest
         response.StatusCode.Should().Be((int)HttpStatusCode.BadRequest);
         response.Value.Should().BeEquivalentTo(new ErrorMessage("Product with id 1 does not exist"));
     }
+
+    [Fact(DisplayName = "Delete returns NoContent")]
+    public void DeleteSuccessful()
+    {
+        // Arrange
+        var mockRepo = new Mock<ISaleRepository>();
+        mockRepo.Setup(repo => repo.Delete(It.IsAny<int>()));
+        var controller = new SaleController(mockRepo.Object);
+
+        // Act
+        var result = controller.Delete(1);
+        var response = result.As<NoContentResult>();
+
+        // Assert
+        response.StatusCode.Should().Be((int)HttpStatusCode.NoContent);
+    }
+
+    [Fact(DisplayName = "Delete when Sale does not exist returns BadRequest")]
+    public void DeleteNotFound()
+    {
+        // Arrange
+        var mockRepo = new Mock<ISaleRepository>();
+        mockRepo.Setup(repo => repo.Delete(It.IsAny<int>()))
+            .Throws<ArgumentException>(() => throw new ArgumentException("Sale with id 1 does not exist"));
+        var controller = new SaleController(mockRepo.Object);
+
+        // Act
+        var result = controller.Delete(1);
+        var response = result.As<BadRequestObjectResult>();
+
+        // Assert
+        response.StatusCode.Should().Be((int)HttpStatusCode.BadRequest);
+        response.Value.Should().BeEquivalentTo(new ErrorMessage("Sale with id 1 does not exist"));
+    }
 }
