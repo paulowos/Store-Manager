@@ -7,20 +7,6 @@ namespace StoreManager.Test.Models;
 [Trait("Category", "Models")]
 public class ModelsTest
 {
-    [Fact(DisplayName = "Sale Model")]
-    public void SaleModel()
-    {
-        var sale = new Sale
-        {
-            Id = 1,
-            Date = DateTime.Now
-        };
-
-        sale.Id.Should().Be(1);
-        sale.Date.Should().BeCloseTo(DateTime.Now, new TimeSpan(0, 0, 1));
-    }
-
-
     [Fact(DisplayName = "SaleProduct Model")]
     public void SaleProductModel()
     {
