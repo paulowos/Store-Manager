@@ -53,4 +53,10 @@ public class ProductRepository : IProductRepository
         _context.Products.Remove(product);
         _context.SaveChanges();
     }
+
+    public IEnumerable<Product> Search(string name)
+    {
+        var products = _context.Products.Where(p => p.Name.Contains(name));
+        return products;
+    }
 }
