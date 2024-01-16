@@ -121,4 +121,36 @@ public class ProductRepositoryTest : IClassFixture<DatabaseContext>
         // Assert
         act.Should().Throw<ArgumentException>().WithMessage("Product not found");
     }
+    
+    [Fact(DisplayName = "Delete Product successful")]
+    public void DeleteSuccessful()
+    {
+        // Arrange
+        const int id = 1;
+        var context = _databaseContext.GetContext(nameof(ProductRepositoryTest) + nameof(DeleteSuccessful));
+        context.Products.Add(ProductsMockData.GetProduct(id));
+        context.SaveChanges();
+        var repository = new ProductRepository(context);
+
+        // Act
+        repository.Delete(id);
+
+        // Assert
+        context.Products.Should().BeEmpty();
+    }
+    
+    [Fact(DisplayName = "Delete Product when Product does not exist throws Exception")]
+    public void DeleteUnsuccessful()
+    {
+        // Arrange
+        const int id = 1;
+        var context = _databaseContext.GetContext(nameof(ProductRepositoryTest) + nameof(DeleteUnsuccessful));
+        var repository = new ProductRepository(context);
+
+        // Act
+        var act = () => repository.Delete(id);
+
+        // Assert
+        act.Should().Throw<ArgumentException>().WithMessage("Product not found");
+    }
 }
