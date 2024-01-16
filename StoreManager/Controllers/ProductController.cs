@@ -51,4 +51,18 @@ public class ProductController : ControllerBase
             return NotFound(new ErrorMessage(e.Message));
         }
     }
+
+    [HttpDelete("{id:int}")]
+    public ActionResult Delete(int id)
+    {
+        try
+        {
+            _repository.Delete(id);
+            return NoContent();
+        }
+        catch (Exception e)
+        {
+            return NotFound(new ErrorMessage(e.Message));
+        }
+    }
 }
