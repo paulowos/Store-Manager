@@ -49,6 +49,8 @@ Para rodar os testes, execute os seguintes comandos
     /swagger/index.html
 ```
 
+___
+
 #### Get all products
 
 - Retorna todos os produtos cadastrados 
@@ -56,7 +58,6 @@ Para rodar os testes, execute os seguintes comandos
 ```http
   GET /products
 ```
-___
 
 #### Get product
 
@@ -70,7 +71,6 @@ ___
 | :-------- | :------- | :-------------------------------- |
 | `id`      | `int`    | (**Required**) Product Id |
 
-___
 
 #### Search product
 
@@ -84,7 +84,6 @@ ___
 | :-------- | :------- | :-------------------------------- |
 | `q`      | `string`    | (**Required**) Product Name |
 
-___
 
 #### Add product
 
@@ -98,7 +97,6 @@ ___
 | :-------- | :------- | :-------------------------------- |
 | `product`      | `json`    | (**Required**) Product Info |
 
-___
 
 #### Update product
 
@@ -113,7 +111,6 @@ ___
 |`id`       |`int`     |(**Required**) Product Id|
 | `product` | `json`    | (**Required**) Product Info |
 
-___
 
 #### Remove product
 
@@ -127,7 +124,6 @@ ___
 | :-------- | :------- | :-------------------------------- |
 | `id`      | `int`    | (**Required**) Product Id |
 
-___
 #### Get all sales
 
 - Retorna todas as vendas cadastradas 
@@ -135,7 +131,6 @@ ___
 ```http
   GET /sales
 ```
-___
 
 #### Get sale
 
@@ -149,7 +144,6 @@ ___
 | :-------- | :------- | :-------------------------------- |
 | `id`      | `int`    | (**Required**) Sale Id |
 
-___
 
 #### Add sale
 
@@ -163,7 +157,6 @@ ___
 | :-------- | :------- | :-------------------------------- |
 | `sale`      | `json`    | (**Required**) Sale Info |
 
-___
 
 #### Remove sale
 
@@ -177,12 +170,8 @@ ___
 | :-------- | :------- | :-------------------------------- |
 | `id`      | `int`    | (**Required**) Sale Id |
 
-___
-
-
-
 
 ## Feedback
 
-Se você possui algum feedback, por favor me contate através do email paulowos@gmail.com, ou [linkedin](www.linkedin.com/in/paulowos)
+Se você possui algum feedback, por favor me contate através do email paulowos@gmail.com, ou [linkedin](https://www.linkedin.com/in/paulowos/)
 
