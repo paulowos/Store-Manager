@@ -1,3 +1,5 @@
+using System.Reflection;
+using Microsoft.OpenApi.Models;
 using StoreManager.Context;
 using StoreManager.Models.Interfaces;
 using StoreManager.Repositories;
@@ -14,6 +16,18 @@ builder.Services.AddDbContext<StoreManagerContext>();
 builder.Services.AddScoped<StoreManagerContext, StoreManagerContext>();
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
 builder.Services.AddScoped<ISaleRepository, SaleRepository>();
+
+builder.Services.AddSwaggerGen(options =>
+{
+    options.SwaggerDoc("v1", new OpenApiInfo
+    {
+        Title = "Store Manager",
+        Description = "API para gerenciamento de loja",
+        Version = "v1"
+    });
+    var filePath = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+    options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, filePath));
+});
 
 var app = builder.Build();
 
